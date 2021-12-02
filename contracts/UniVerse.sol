@@ -14,7 +14,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
 
     Counters.Counter private _tokenIdTracker;
 
-    uint256 public constant MAX_ELEMENTS = 1000000000;
+    uint256 public constant MAX_ELEMENTS = 1000;
     uint256 public constant PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
