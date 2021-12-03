@@ -23,7 +23,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     string public baseTokenURI;
     byte[42][] public _whitedList;
 
-    event CreateComputer(uint256 indexed id);
+    event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "Univ") {
         setBaseURI(baseURI);
         pause(true);
@@ -71,24 +71,21 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     function totalMint() public view returns (uint256) {
         return _totalSupply();
     }
-    function mint(address _to, uint256 _count) public payable onlyWhitedListMemeber saleIsOpen {
+    function mint(address _to) public payable onlyWhitedListMemeber saleIsOpen {
         uint256 total = _totalSupply();
         require(total + _count <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
         require(_count <= MAX_BY_MINT, "Exceeds number");
         require(msg.value >= price(_count), "Value below price");
-        uint256 ownedNftCount = balanceOf(_to);
-        require(ownedNftCount + _count <= MAX_BY_OWNER, "Can't have more than 20 NFTs");
-
-        for (uint256 i = 0; i < _count; i++) {
-            _mintAnElement(_to);
-        }
+        // uint256 ownedNftCount = balanceOf(_to);
+        // require(ownedNftCount + _count <= MAX_BY_OWNER, "Can't have more than 20 NFTs");
+        _mintAnElement(_to);
     }
     function _mintAnElement(address _to) private {
         uint id = _totalSupply();
         _tokenIdTracker.increment();
         _safeMint(_to, id);
-        emit CreateComputer(id);
+        emit CreateUniverse(id);
     }
     function price(uint256 _count) public pure returns (uint256) {
         return PRICE.mul(_count);
