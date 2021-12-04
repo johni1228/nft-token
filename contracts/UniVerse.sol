@@ -38,31 +38,32 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
 
     modifier onlyWhitedListMemeber {
-        require(isWhitedList(_msgSender()), "This address doesn't include in whitelist")
+        require(isWhitedList(_msgSender()), "This address doesn't include in whitelist");
+        _;
     }
 
-    function isWhitedList(address a) {
+    function isWhitedList(address someone) public view returns(bool) {
         uint256 initialization;
         for (initialization = 0; initialization < _whitedList.length; initialization++){
-            if (_msgSender() == _whitedList[initialization]){
+            if (someone == _whitedList[initialization]){
                 return true;
             }
         }
         return false;
     }
 
-    function setWhitedList(address[] row) public view onlyOwner {
+    function setWhitedList(address[] memory row) public payable onlyOwner {
         _whitedList = row;
     }
 
-    function removeWhiteList() public view onlyOwner return (bool) {
-        byte[42][] removeList;
+    function removeWhiteList() public payable onlyOwner returns (bool) {
+        address[] memory removeList;
         _whitedList = removeList;
         return true;
     }
 
-    function getWhitedList() internal view returns (byte[42][]) {
-        return _whitedList
+    function getWhitedList() internal view returns (address[] memory) {
+        return _whitedList;
     }
 
     function _totalSupply() internal view returns (uint) {
@@ -73,10 +74,9 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
     function mint(address _to) public payable onlyWhitedListMemeber saleIsOpen {
         uint256 total = _totalSupply();
-        require(total + _count <= MAX_ELEMENTS, "Max limit");
+        require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
-        require(_count <= MAX_BY_MINT, "Exceeds number");
-        require(msg.value >= price(_count), "Value below price");
+        require(msg.value >= price(1), "Value below price");
         // uint256 ownedNftCount = balanceOf(_to);
         // require(ownedNftCount + _count <= MAX_BY_OWNER, "Can't have more than 20 NFTs");
         _mintAnElement(_to);
