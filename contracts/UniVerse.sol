@@ -24,7 +24,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     byte[42][] public _whitedList;
 
     event CreateUniverse(uint256 indexed id);
-    constructor(string memory baseURI) ERC721("UniVerse", "Univ") {
+    constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
         setBaseURI(baseURI);
         pause(true);
     }

@@ -1,0 +1,26 @@
+{
+  "name": "Universe #2",
+  "symbol": "UNIVE",
+  "edition": "2021",
+  "description": "Universe",
+  "image": "",
+  "external_url": "",
+  "attributes": [
+    {
+      "trait_type": "Rarity",
+      "value": "rare"
+    },
+    {
+      "trait_type": "Upgrade moon",
+      "value": "Yes"
+    },
+    {
+      "trait_type": "Upgarde civilsatioin",
+      "value": "Yes"
+    },
+    {
+      "trait_type": "Upgrade tech",
+      "value": "Yes"
+    }
+  ]
+}
