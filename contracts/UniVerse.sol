@@ -18,10 +18,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     uint256 public constant PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
-    address public constant creatorAddress = 0x; // TODO: update
-    address public constant devAddress = 0x; // TODO: update
+    address public constant creatorAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
+    address public constant devAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
     string public baseTokenURI;
-    byte[42][] public _whitedList;
+    address[] public _whitedList;
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
@@ -51,7 +51,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         return false;
     }
 
-    function setWhitedList(byte[42][] row) public view onlyOwner {
+    function setWhitedList(address[] row) public view onlyOwner {
         _whitedList = row;
     }
 
