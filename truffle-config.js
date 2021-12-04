@@ -43,8 +43,6 @@ module.exports = {
     bsctest: {
       provider: () => new HDWalletProvider(MNEMONIC, `https://data-seed-prebsc-1-s1.binance.org:8545/`),
       network_id: 97 ,       // Rinkeby's id
-      gas: 850000000,        
-      gasPrice: 10000000000,  // 1 gwei (in wei) (default: 100 gwei)
       confirmations: 2,    // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 200,  // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true     // Skip dry run before migrations? (default: false for public nets )
