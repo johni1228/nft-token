@@ -53,6 +53,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
 
     function setWhitedList(address[] memory row) public onlyOwner {
+        require(row.length<101, "100 limit");
         _whitedList = row;
     }
 
