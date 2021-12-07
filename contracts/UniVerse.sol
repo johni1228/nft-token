@@ -18,10 +18,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     uint256 public constant PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
-    address public constant creatorAddress = 0x; // TODO: update
-    address public constant devAddress = 0x; // TODO: update
+    address public constant creatorAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
+    address public constant devAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
     string public baseTokenURI;
-    byte[42][] public _whitedList;
+    address[] public _whitedList;
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
@@ -38,31 +38,32 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
 
     modifier onlyWhitedListMemeber {
-        require(isWhitedList(_msgSender()), "This address doesn't include in whitelist")
+        require(isWhitedList(_msgSender()), "This address doesn't include in whitelist");
+        _;
     }
 
-    function isWhitedList(address a) {
+    function isWhitedList(address someone) public view returns(bool) {
         uint256 initialization;
         for (initialization = 0; initialization < _whitedList.length; initialization++){
-            if (_msgSender() == _whitedList[initialization]){
+            if (someone == _whitedList[initialization]){
                 return true;
             }
         }
         return false;
     }
 
-    function setWhitedList(byte[42][] row) public view onlyOwner {
+    function setWhitedList(address[] memory row) public payable onlyOwner {
         _whitedList = row;
     }
 
-    function removeWhiteList() public view onlyOwner return (bool) {
-        byte[42][] removeList;
+    function removeWhiteList() public payable onlyOwner returns (bool) {
+        address[] memory removeList;
         _whitedList = removeList;
         return true;
     }
 
-    function getWhitedList() internal view returns (byte[42][]) {
-        return _whitedList
+    function getWhitedList() internal view returns (address[] memory) {
+        return _whitedList;
     }
 
     function _totalSupply() internal view returns (uint) {
@@ -73,10 +74,9 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
     function mint(address _to) public onlyWhitedListMemeber saleIsOpen {
         uint256 total = _totalSupply();
-        require(total + _count <= MAX_ELEMENTS, "Max limit");
+        require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
-        require(_count <= MAX_BY_MINT, "Exceeds number");
-        require(msg.value >= price(_count), "Value below price");
+        require(msg.value >= price(1), "Value below price");
         // uint256 ownedNftCount = balanceOf(_to);
         // require(ownedNftCount + _count <= MAX_BY_OWNER, "Can't have more than 20 NFTs");
         _mintAnElement(_to);

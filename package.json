@@ -4,13 +4,16 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@openzeppelin/contracts": "^4.3.0",
+    "@truffle/hdwallet-provider": "^2.0.0",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "ipfs-http-client": "^54.0.2"
+    "ipfs-http-client": "^54.0.2",
+    "truffle-plugin-verify": "^0.5.18"
   }
 }
