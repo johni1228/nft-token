@@ -71,7 +71,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     function totalMint() public view returns (uint256) {
         return _totalSupply();
     }
-    function mint(address _to) public payable onlyWhitedListMemeber saleIsOpen {
+    function mint(address _to) public onlyWhitedListMemeber saleIsOpen {
         uint256 total = _totalSupply();
         require(total + _count <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
