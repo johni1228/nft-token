@@ -15,13 +15,16 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     Counters.Counter private _tokenIdTracker;
 
     uint256 public constant MAX_ELEMENTS = 1000;
-    uint256 public constant PRICE = 5 * 10**16; //TODO: update price
+    uint256 public PRICE = 5 * 10**16; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
     address public constant creatorAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
     address public constant devAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
     string public baseTokenURI;
     address[] public _whitedList;
+
+    mapping(address => uint) ownerRate;
+
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
@@ -43,7 +46,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     }
 
     function isWhitedList(address someone) public view returns(bool) {
-        uint256 initialization;
+        uint256 initialization = 0;
         for (initialization = 0; initialization < _whitedList.length; initialization++){
             if (someone == _whitedList[initialization]){
                 return true;
@@ -88,8 +91,9 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         _safeMint(_to, id);
         emit CreateUniverse(id);
     }
-    function price(uint256 _count) public pure returns (uint256) {
-        return PRICE.mul(_count);
+
+    function setPrice(uint256 _price) public onlyOwner {
+        PRICE = _price;
     }
 
     function _baseURI() internal view virtual override returns (string memory) {
@@ -142,5 +146,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
         return super.supportsInterface(interfaceId);
     }
+
+    
     
 }
