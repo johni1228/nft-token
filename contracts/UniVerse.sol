@@ -23,8 +23,8 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     string public baseTokenURI;
     address[] public _whitedList;
 
-    mapping(address => uint) ownerRate;
-
+    mapping(address => uint) public ownerRate;   // address => rate
+    mapping(uint => address) public tokenOwner;  // id => address
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
