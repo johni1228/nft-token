@@ -7,21 +7,27 @@ import "./UniVerse.sol";
 contract RewardSystem is UniVerse {
   using SafeMath for uint256;
   address marketingAddress = "0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652";
-  uint256 public rewardAmount;
   // 1 : epic, 2: legendary - upgrade 2, 3: lengendary - upgrade 1, 4: non - lengendary, 5: rare - upgrade, 6: non - rare, 7 : common
 
-  function distribute(uint256 _amount) public {
+  function distribute(uint256 _amount) internal {
     uint256 markertingAmount = _amount.mul(197).min(1000);
     uint256 distributeAmount = _amount.mul(803).min(1000);
+    uint256 basicRate = 5;
     for(uint i = 0; i< _totalSupply(), i++){
       address _address = tokenOwner[i];
-      uint _amount = rewardAmount(ownerRate[_address]);
+      basicRate = ownerRate[_address]
+      uint256 _amount = rewardAmount(basicRate);
       _address.transfer(_amount);
     }
   }
 
-  function rewardAmount(uint256 _rate) private returns(uint256) {
-    uint _rewardAmount = _rate.mul(1000).div(_totalSupply());
+  function rewardAmount(uint256 _rate) internal returns(uint256) {
+    uint256 _rewardAmount = _rate.mul(10).div(_totalSupply());  //_rate.mul(1000).div(100).div(_totalSupply())
     return _rewardAmount;
+  }
+
+  function upgradToken(address memory _address) public {
+    require(ownerRate[_address] <= 8, "maximum upgrade");
+    ownerRate[_address]++;
   }
 }
