@@ -66,10 +66,6 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         return true;
     }
 
-    function getWhitedList() internal view returns (address[] memory) {
-        return _whitedList;
-    }
-
     function _totalSupply() internal view returns (uint) {
         return _tokenIdTracker.current();
     }
