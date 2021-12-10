@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol"; 
 
-contract QKCToken is ERC20, Ownable {
+contract UniverseToken is ERC20, Ownable {
     string public symbol;
     string public  name;
     uint8 public decimals;
@@ -14,8 +14,8 @@ contract QKCToken is ERC20, Ownable {
     mapping(address => mapping(address => uint)) allowed;
  
     constructor() public {
-        symbol = "QKC";
-        name = "QuikNode Coin";
+        symbol = "UNIV";
+        name = "UniverseToken";
         decimals = 2;
         _totalSupply = 100000000;
         balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
