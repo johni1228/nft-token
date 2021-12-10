@@ -22,6 +22,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
     address public constant devAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
     string public baseTokenURI;
     address[] public _whitedList;
+    bool private isDistribute = true;
 
     mapping(address => uint) public ownerRate;   // address => rate
     mapping(uint => address) public tokenOwner;  // id => address
@@ -40,9 +41,19 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         _;
     }
 
+    modifier isEnableDistribute {
+        require(isDistribute == true);
+        _;
+    }
+
+    
     modifier onlyWhitedListMemeber {
         require(isWhitedList(_msgSender()), "This address doesn't include in whitelist");
         _;
+    }
+    
+    function triggerDistribute(bool _isDistribute) external onlyOwner {
+        isDistribute = _isDistribute;
     }
 
     function isWhitedList(address someone) public view returns(bool) {

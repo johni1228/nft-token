@@ -6,14 +6,14 @@ import "./UniVerse.sol";
 
 contract RewardSystem is UniVerse {
   using SafeMath for uint256;
-  
+
   address marketingAddress = owner();
   // 1 : epic, 2: legendary - upgrade 2, 3: lengendary - upgrade 1, 4: non - lengendary, 5: rare - upgrade, 6: non - rare, 7 : common
   function setMarketingAddress(address _address) external onlyOwner {
     marketingAddress = _address;
   }
 
-  function distribute(uint256 _amount) internal {
+  function distribute(uint256 _amount) internal isEnableDistribute {
     uint256 markertingAmount = _amount.mul(197).min(1000);
     uint256 distributeAmount = _amount.mul(803).min(1000);
     uint256 basicRate = 5;
