@@ -6,7 +6,8 @@ import "./UniVerse.sol";
 
 contract RewardSystem is UniVerse {
   using SafeMath for uint256;
-  address marketingAddress = "0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652";
+  
+  address marketingAddress = owner();
   // 1 : epic, 2: legendary - upgrade 2, 3: lengendary - upgrade 1, 4: non - lengendary, 5: rare - upgrade, 6: non - rare, 7 : common
   function setMarketingAddress(address _address) external onlyOwner {
     marketingAddress = _address;

@@ -76,7 +76,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         uint256 total = _totalSupply();
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
-        require(msg.value >= price(1), "Value below price");
+        require(balanceOf(_to) < 1, "User only mint 1 NFTs");
         // uint256 ownedNftCount = balanceOf(_to);
         // require(ownedNftCount + _count <= MAX_BY_OWNER, "Can't have more than 20 NFTs");
         _mintAnElement(_to);
