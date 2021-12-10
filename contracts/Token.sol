@@ -17,7 +17,7 @@ contract QKCToken is ERC20, Ownable {
         symbol = "QKC";
         name = "QuikNode Coin";
         decimals = 2;
-        _totalSupply = 100000;
+        _totalSupply = 100000000;
         balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
         emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
     }
