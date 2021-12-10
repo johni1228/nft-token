@@ -8,6 +8,9 @@ contract RewardSystem is UniVerse {
   using SafeMath for uint256;
   address marketingAddress = "0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652";
   // 1 : epic, 2: legendary - upgrade 2, 3: lengendary - upgrade 1, 4: non - lengendary, 5: rare - upgrade, 6: non - rare, 7 : common
+  function setMarketingAddress(address _address) external onlyOwner {
+    marketingAddress = _address;
+  }
 
   function distribute(uint256 _amount) internal {
     uint256 markertingAmount = _amount.mul(197).min(1000);
@@ -15,7 +18,7 @@ contract RewardSystem is UniVerse {
     uint256 basicRate = 5;
     for(uint i = 0; i< _totalSupply(), i++){
       address _address = tokenOwner[i];
-      basicRate = ownerRate[_address]
+      basicRate = ownerRate[_address];
       uint256 _amount = rewardAmount(basicRate);
       _address.transfer(_amount);
     }
@@ -26,7 +29,7 @@ contract RewardSystem is UniVerse {
     return _rewardAmount;
   }
 
-  function upgradToken(address memory _address) public {
+  function upgradToken(address memory _address) external onlyOwner {
     require(ownerRate[_address] <= 8, "maximum upgrade");
     ownerRate[_address]++;
   }
