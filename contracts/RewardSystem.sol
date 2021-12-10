@@ -43,4 +43,8 @@ contract RewardSystem is UniVerse {
     rewardPerUser[msg.sender] = 0;
     return true;
   }
+
+  function getTotalReward() external view returns (uint256){
+    return rewardPerUser[msg.sender];
+  }
 }
