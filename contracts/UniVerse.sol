@@ -157,6 +157,8 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     function upgradToken(address memory _address) external onlyOwner {
         require(ownerRate[_address] <= 8, "maximum upgrade");
+        removeToken(_address);
+        mint(_address);
         ownerRate[_address]++;
     }
 
@@ -171,8 +173,8 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         }
     }
 
-    function removeToken(uint256 _id) private returns (bool) {
-        tokenOwner[_id] = address(this);
+    function removeToken(address _address) private returns (bool) {
+        TransferFrom(_address, "zero-address");
         return true;
     }
 }
