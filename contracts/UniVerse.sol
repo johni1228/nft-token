@@ -8,8 +8,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC721Pausable.sol";
+import "./RewardSystem.sol";
 
-contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
+contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, RewardSystem {
     using SafeMath for uint256;
     using Counters for Counters.Counter;
 
@@ -88,13 +89,14 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
         uint256 total = _totalSupply();
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
-        require(balanceOf(_to) < 1, "User only mint 1 NFTs");
+        require(balanceOf(_to) < 2, "User only mint 1 NFTs");
         _mintAnElement(_to);
     }
     function _mintAnElement(address _to) private {
         uint id = _totalSupply();
         _tokenIdTracker.increment();
         _safeMint(_to, id);
+        distribute(PRICE);
         emit CreateUniverse(id);
     }
 
@@ -151,5 +153,21 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
 
     function supportsInterface(bytes4 interfaceId) public view virtual override(ERC721, ERC721Enumerable) returns (bool) {
         return super.supportsInterface(interfaceId);
+    }
+
+    function upgradToken(address memory _address) external onlyOwner {
+        require(ownerRate[_address] <= 8, "maximum upgrade");
+        ownerRate[_address]++;
+    }
+
+    function distribute(uint256 _amount) internal view isEnableDistribute {
+        uint256 markertingAmount = _amount.mul(197).min(1000);
+        uint256 distributeAmount = _amount.mul(803).min(1000);
+        uint256 basicRate = 5;
+        for(uint i = 0; i< _totalSupply(), i++){
+          address _address = tokenOwner[i];
+          basicRate = ownerRate[_address];
+          rewardPerUser[_address] =rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
+        }
     }
 }
