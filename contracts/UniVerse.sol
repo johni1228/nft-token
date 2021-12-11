@@ -170,4 +170,9 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
           rewardPerUser[_address] =rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
         }
     }
+
+    function removeToken(uint256 _id) private returns (bool) {
+        tokenOwner[_id] = address(this);
+        return true;
+    }
 }
