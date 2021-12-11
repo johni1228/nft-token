@@ -155,7 +155,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         return super.supportsInterface(interfaceId);
     }
 
-    function upgradToken(address memory _address) external onlyOwner {
+    function upgradToken(address memory _address) external onlyOwner {  //TODO: update furture;
         require(ownerRate[_address] <= 8, "maximum upgrade");
         removeToken(_address);
         mint(_address);
@@ -173,7 +173,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         }
     }
 
-    function removeToken(address _address) private returns (bool) {
+    function removeToken(address _address) private returns (bool) {   //TODO: will update furture
         TransferFrom(_address, "zero-address");
         return true;
     }
