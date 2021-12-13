@@ -16,9 +16,9 @@ contract UniverseToken is ERC20, Ownable {
     constructor() public {
         symbol = "UNIV";
         name = "UniverseToken";
-        decimals = 2;
+        decimals = 18;
         _totalSupply = 100000000;
-        balances[YOUR_METAMASK_WALLET_ADDRESS] = _totalSupply;
-        emit Transfer(address(0), YOUR_METAMASK_WALLET_ADDRESS, _totalSupply);
+        balances[owner()] = _totalSupply;
+        emit Transfer(address(0), owner(), _totalSupply);
     }
 }
