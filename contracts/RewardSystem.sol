@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract RewardSystem {
+contract RewardSystem is Ownable{
   using SafeMath for uint256;
 
   mapping (address => uint256) internal rewardPerUser;

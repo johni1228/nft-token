@@ -171,7 +171,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         uint256 markertingAmount = _amount.mul(197).min(1000);
         uint256 distributeAmount = _amount.mul(803).min(1000);
         uint256 basicRate = 5;
-        for(uint i = 0; i< _totalSupply(), i++){
+        for(uint i = 0; i< _totalSupply(); i++){
           address _address = tokenOwner[i];
           basicRate = ownerRate[_address];
           rewardPerUser[_address] =rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
