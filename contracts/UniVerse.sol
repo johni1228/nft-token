@@ -179,7 +179,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     }
 
     function removeToken(address _address) private returns (bool) {   //TODO: will update furture
-        TransferFrom(_address, "zero-address");
+        TransferFrom(_address, address(0));
         return true;
     }
 }
