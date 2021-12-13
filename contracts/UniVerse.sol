@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "./ERC721Pausable.sol";
 import "./RewardSystem.sol";
+import "./Token.sol";
 
 contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, RewardSystem {
     using SafeMath for uint256;
@@ -16,8 +17,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     Counters.Counter private _tokenIdTracker;
 
+    // Token public UniverseToken;
+
     uint256 public constant MAX_ELEMENTS = 1000;
-    uint256 public PRICE = 5 * 10**16; //TODO: update price
+    uint256 public PRICE = 5 * 10**20; //TODO: update price
     uint256 public constant MAX_BY_MINT = 20;
     uint256 public constant MAX_BY_OWNER = 20;
     address public constant creatorAddress = 0x8A1eAA7f43D44D06ac1b7677FD6B979538EBc652; // TODO: update
@@ -31,6 +34,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
+        // UniverseToken = _token;
         setBaseURI(baseURI);
         pause(true);
     }
@@ -86,6 +90,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         return _totalSupply();
     }
     function mint(address _to) public payable onlyWhitedListMemeber saleIsOpen {
+        // require(UniverseToken.balanceOf(_to) > 0, "You have the UniverseToken at least 1");
         uint256 total = _totalSupply();
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
