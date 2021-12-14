@@ -29,8 +29,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     address[] public _whitedList;
     bool private isDistribute = true;
 
-    mapping(address => uint) public ownerRate;   // address => rate
-    mapping(uint => address) public tokenOwner;  // id => address
+    mapping(uint256 => uint) public tokenRate;   // address => rate
 
     event CreateUniverse(uint256 indexed id);
     constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
@@ -160,11 +159,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         return super.supportsInterface(interfaceId);
     }
 
-    function upgradToken(address memory _address) external onlyOwner {  //TODO: update furture;
-        require(ownerRate[_address] <= 8, "maximum upgrade");
-        removeToken(_address);
-        mint(_address);
-        ownerRate[_address]++;
+    function upgradToken(uint256 _id) external onlyOwner {  //TODO: update furture;
+        require(tokenRate[_id] <= 8, "maximum upgrade");
+        _burn(_id);
+        mint(ownerOf(_id));
     }
 
     function distribute(uint256 _amount) internal view isEnableDistribute {
@@ -172,14 +170,14 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         uint256 distributeAmount = _amount.mul(803).min(1000);
         uint256 basicRate = 5;
         for(uint i = 0; i< _totalSupply(); i++){
-          address _address = tokenOwner[i];
-          basicRate = ownerRate[_address];
-          rewardPerUser[_address] =rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
+          address _address = ownerOf(i);
+          basicRate = tokenRate[i];
+          if(rewardPerUser[_address] == 0) {
+            rewardPerUser[_address] = rewardAmount(basicRate, distributeAmount);
+          }
+          else {
+            rewardPerUser[_address] = rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
+          }
         }
-    }
-
-    function removeToken(address _address) private returns (bool) {   //TODO: will update furture
-        TransferFrom(_address, address(0));
-        return true;
     }
 }
