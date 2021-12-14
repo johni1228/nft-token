@@ -162,7 +162,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     function upgradToken(uint256 _id) external onlyOwner {  //TODO: update furture;
         require(tokenRate[_id] <= 8, "maximum upgrade");
         _burn(_id);
-        mint(ownerOf(_id));
+        _mint(ownerOf(_id), _id.add(MAX_ELEMENTS));
     }
 
     function distribute(uint256 _amount) internal view isEnableDistribute {
