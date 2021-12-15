@@ -16,7 +16,7 @@ contract RewardSystem is Ownable{
     marketingAddress = _address;
   }
 
-  function rewardAmount(uint256 _rate, uint256 _amount) internal view returns(uint256) {
+  function rewardAmount(uint256 _rate, uint256 _amount) internal pure returns(uint256) {
     uint256 _rewardAmount = _rate.mul(10).mul(_amount).div(1000);  //_rate.mul(1000).div(100).div(_totalSupply())
     return _rewardAmount;
   }

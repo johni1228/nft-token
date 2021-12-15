@@ -154,7 +154,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         _mint(ownerOf(_id), _id.add(MAX_ELEMENTS));
     }
 
-    function distribute(uint256 _amount) internal view isEnableDistribute {
+    function distribute(uint256 _amount) internal isEnableDistribute {
         uint256 markertingAmount = _amount.mul(197).div(1000);
         uint256 distributeAmount = _amount.mul(803).div(1000);
         uint256 basicRate = 5;
