@@ -94,6 +94,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
         require(balanceOf(_to) < 2, "User only mint 1 NFTs");
+        require(UniverseToken.balanceOf(msg.sender) > PRICE, "Your amount is low than price");
         UniverseToken.transferFrom(msg.sender, address(this), PRICE);
         _mintAnElement(_to);
     }
@@ -119,8 +120,8 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     function walletOfOwner(address _owner) external view returns (uint256[] memory) {
         uint256 tokenCount = balanceOf(_owner);
-
         uint256[] memory tokensId = new uint256[](tokenCount);
+        
         for (uint256 i = 0; i < tokenCount; i++) {
             tokensId[i] = tokenOfOwnerByIndex(_owner, i);
         }
