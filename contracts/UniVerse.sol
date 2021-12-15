@@ -38,6 +38,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         tokenRate[0] = 5;
         tokenRate[1] = 8;
         tokenRate[2] = 6;
+        _whitedList.push(owner());
         pause(true);
     }
 
@@ -64,10 +65,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         isDistribute = _isDistribute;
     }
 
-    function isWhitedList(address someone) public view returns(bool) {
-        uint256 initialization = 0;
-        for (initialization = 0; initialization < _whitedList.length; initialization++){
-            if (someone == _whitedList[initialization]){
+    function isWhitedList(address _address) public view returns(bool) {
+        uint256 i = 0;
+        for (i = 0; i < _whitedList.length; i++){
+            if (_address == _whitedList[i]){
                 return true;
             }
         }
@@ -80,8 +81,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     }
 
     function removeWhiteList() private onlyOwner returns(bool){
-        address[] memory removeList;
-        _whitedList = removeList;
+        _whitedList = new address[];
         return true;
     }
 
