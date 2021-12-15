@@ -121,7 +121,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     function walletOfOwner(address _owner) external view returns (uint256[] memory) {
         uint256 tokenCount = balanceOf(_owner);
         uint256[] memory tokensId = new uint256[](tokenCount);
-        
+
         for (uint256 i = 0; i < tokenCount; i++) {
             tokensId[i] = tokenOfOwnerByIndex(_owner, i);
         }
@@ -172,7 +172,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     }
 
     function rewardWithdraw() external returns (bool) {
-        require(rewardPerUser[msg.sender] > 0, "Reward is very small");\
+        require(rewardPerUser[msg.sender] > 0, "Reward is very small");
         uint256 reward = rewardPerUser[msg.sender];
         _address.transfer(reward); // TODO: correctly using transfer function.
         UniverseToken.transferFrom(address(this), msg.sender, reward);
