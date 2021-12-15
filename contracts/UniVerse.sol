@@ -76,7 +76,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         _whitedList = row;
     }
 
-    function removeWhiteList() private onlyOwner{
+    function removeWhiteList() private onlyOwner returns(bool){
         address[] memory removeList;
         _whitedList = removeList;
         return true;
@@ -156,8 +156,8 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     }
 
     function distribute(uint256 _amount) internal view isEnableDistribute {
-        uint256 markertingAmount = _amount.mul(197).min(1000);
-        uint256 distributeAmount = _amount.mul(803).min(1000);
+        uint256 markertingAmount = _amount.mul(197).div(1000);
+        uint256 distributeAmount = _amount.mul(803).div(1000);
         uint256 basicRate = 5;
         for(uint i = 0; i< _totalSupply(); i++){
           address _address = ownerOf(i);
