@@ -17,7 +17,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     Counters.Counter private _tokenIdTracker;
 
-    // Token public UniverseToken;
+    Token public UniverseToken;
 
     uint256 public constant MAX_ELEMENTS = 1000;
     uint256 public PRICE = 5 * 10**20; //TODO: update price
@@ -30,10 +30,10 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     bool private isDistribute = true;
 
     mapping(uint256 => uint) public tokenRate;   // address => rate
-
+    
     event CreateUniverse(uint256 indexed id);
-    constructor(string memory baseURI) ERC721("UniVerse", "UNIV") {
-        // UniverseToken = _token;
+    constructor(string memory baseURI, Token _token) ERC721("UniVerse", "UNIV") {
+        UniverseToken = _token;
         setBaseURI(baseURI);
         pause(true);
     }
@@ -94,13 +94,13 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
         require(total <= MAX_ELEMENTS, "Sale end");
         require(balanceOf(_to) < 2, "User only mint 1 NFTs");
+        UniverseToken.transferFrom(msg.sender, address(this), PRICE);
         _mintAnElement(_to);
     }
     function _mintAnElement(address _to) private {
         uint id = _totalSupply();
         _tokenIdTracker.increment();
-        _safeMint(_to, id);
-        
+        _mint(_to, id);
         distribute(PRICE);
         emit CreateUniverse(id);
     }
@@ -136,18 +136,6 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         _unpause();
     }
 
-    function withdrawAll() public payable onlyOwner {
-        uint256 balance = address(this).balance;
-        require(balance > 0);
-        _widthdraw(devAddress, balance.mul(35).div(100));
-        _widthdraw(creatorAddress, address(this).balance);
-    }
-
-    function _widthdraw(address _address, uint256 _amount) private {
-        (bool success, ) = _address.call{value: _amount}("");
-        require(success, "Transfer failed.");
-    }
-
     function _beforeTokenTransfer(
         address from,
         address to,
@@ -180,5 +168,14 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
             rewardPerUser[_address] = rewardPerUser[_address].add(rewardAmount(basicRate, distributeAmount));
           }
         }
+    }
+
+    function rewardWithdraw() external returns (bool) {
+        require(rewardPerUser[msg.sender] > 0, "Reward is very small");\
+        uint256 reward = rewardPerUser[msg.sender];
+        _address.transfer(reward); // TODO: correctly using transfer function.
+        UniverseToken.transferFrom(address(this), msg.sender, reward);
+        rewardPerUser[msg.sender] = 0;
+        return true;
     }
 }
