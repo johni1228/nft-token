@@ -10,7 +10,7 @@ contract RewardSystem is Ownable{
 
   mapping (address => uint256) internal rewardPerUser;
 
-  address marketingAddress = owner();
+  address public marketingAddress = owner();
   // 1 : epic, 2: legendary - upgrade 2, 3: lengendary - upgrade 1, 4: non - lengendary, 5: rare - upgrade, 6: non - rare, 7 : common
   function setMarketingAddress(address _address) external onlyOwner {
     marketingAddress = _address;
