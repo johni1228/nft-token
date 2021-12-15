@@ -35,6 +35,9 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     constructor(string memory baseURI, Token _token) ERC721("UniVerse", "UNIV") {
         UniverseToken = _token;
         setBaseURI(baseURI);
+        tokenRate[0] = 5;
+        tokenRate[1] = 8;
+        tokenRate[2] = 6;
         pause(true);
     }
 
