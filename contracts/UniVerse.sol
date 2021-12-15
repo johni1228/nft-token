@@ -81,7 +81,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     }
 
     function removeWhiteList() private onlyOwner returns(bool){
-        _whitedList = new address[];
+        _whitedList = new address[](100);
         return true;
     }
 
