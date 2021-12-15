@@ -100,6 +100,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         uint id = _totalSupply();
         _tokenIdTracker.increment();
         _safeMint(_to, id);
+        
         distribute(PRICE);
         emit CreateUniverse(id);
     }
