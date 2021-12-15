@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./Token.sol";
 
-contract RewardSystem is ERC20, Ownable{
+contract RewardSystem is Ownable{
   using SafeMath for uint256;  
 
   mapping (address => uint256) internal rewardPerUser;
