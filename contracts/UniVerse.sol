@@ -174,7 +174,6 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     function rewardWithdraw() external returns (bool) {
         require(rewardPerUser[msg.sender] > 0, "Reward is very small");
         uint256 reward = rewardPerUser[msg.sender];
-        _address.transfer(reward); // TODO: correctly using transfer function.
         UniverseToken.transferFrom(address(this), msg.sender, reward);
         rewardPerUser[msg.sender] = 0;
         return true;
