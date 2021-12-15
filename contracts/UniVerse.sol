@@ -158,7 +158,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         uint256 markertingAmount = _amount.mul(197).div(1000);
         uint256 distributeAmount = _amount.mul(803).div(1000);
         uint256 basicRate = 5;
-        Token.transferFrom(marketingAddress, address(this), markertingAmount);
+        UniverseToken.transferFrom(marketingAddress, address(this), markertingAmount);
         for(uint i = 0; i< _totalSupply(); i++){
           address _address = ownerOf(i);
           basicRate = tokenRate[i];
