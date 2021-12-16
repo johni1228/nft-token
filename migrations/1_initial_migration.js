@@ -13,6 +13,6 @@ const baseURI = 'https://ras-nft.herokuapp.com/api/v0/nfts/'; //TODO: update api
 // };
 
 module.exports = async function (deployer) {
-  const token = await UniverseToken.deployed();
-  await Universe.deployed(baseURI, token.address);
+  const token = await UniverseToken.deployed({deployer});
+  await Universe.deployed(baseURI, token.address, {deployer});
 }; 
