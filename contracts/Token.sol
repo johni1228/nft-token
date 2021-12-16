@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Token is ERC20, Ownable {
     constructor() ERC20("UniverseToken", "UNIV") {
-        _mint(owner(), 100000000);
+        _mint(owner(), 10**26);
     }
 }
 
