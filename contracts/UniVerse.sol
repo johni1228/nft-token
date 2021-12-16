@@ -17,7 +17,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
 
     Counters.Counter private _tokenIdTracker;
 
-    Token public UniverseToken;
+    IERC20 public UniverseToken;
 
     uint256 public constant MAX_ELEMENTS = 1000;
     uint256 public PRICE = 5 * 10**20; //TODO: update price
@@ -32,7 +32,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     mapping(uint256 => uint) public tokenRate;   // address => rate
     
     event CreateUniverse(uint256 indexed id);
-    constructor(string memory baseURI, Token _token) ERC721("UniVerse", "UNIV") {
+    constructor(string memory baseURI, IERC20 _token) ERC721("UniVerse", "UNIV") {
         UniverseToken = _token;
         setBaseURI(baseURI);
         tokenRate[0] = 5;
