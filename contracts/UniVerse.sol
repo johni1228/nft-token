@@ -75,14 +75,13 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
         return false;
     }
 
-    function setWhitedList(address[] memory row) private onlyOwner {
+    function setWhitedList(address[] memory row) external onlyOwner {
         require(row.length<101, "100 limit");
         _whitedList = row;
     }
 
-    function removeWhiteList() private onlyOwner returns(bool){
+    function removeWhiteList() public onlyOwner {
         _whitedList = new address[](100);
-        return true;
     }
 
     function _totalSupply() internal view returns (uint) {
@@ -91,7 +90,7 @@ contract UniVerse is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable, 
     function totalMint() public view returns (uint256) {
         return _totalSupply();
     }
-    function mint(address _to) public  onlyWhitedListMemeber saleIsOpen {
+    function mint(address payable _to) public  onlyWhitedListMemeber saleIsOpen {
         // require(UniverseToken.balanceOf(_to) > 0, "You have the UniverseToken at least 1");
         uint256 total = _totalSupply();
         require(total + 1 <= MAX_ELEMENTS, "Max limit");
